@@ -1,0 +1,23 @@
+.error404{
+    color: white;
+    width: 100%;
+    min-height: calc(100vh - var(--headerheight));
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-size: calc(var(--formfontsize) * 2);
+}
+img{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.error404 > img{
+    height: 30vh;
+    min-height: 150px;
+    max-height: 300px;
+}
+.error404 > a{
+    color: white;
+}
