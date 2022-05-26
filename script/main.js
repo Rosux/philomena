@@ -1,8 +1,10 @@
-////////////////////
-// general rules: //
-////////////////////
-// data-link = use this in an <a> tag when not directing to another website
-// philomena-import = class element to import (imports all child elements of that element)
+// html examples:
+//   <img src="image.png" alt="Logo" data-link-href="index.php" data-link>
+//   <a href="login.php" data-link>Login</a>
+// html attribute usage:
+//   data-link = use this in any html element when not directing to another website like <a>
+//      provide a link with href="" OR data-link-href="" when using data-link
+//   philomena-import = class for referencing import parts like it only loads that element and its children
 let defaultPage = "index.php";
 
 // prevent links from working if they have the "data-link" in their <>
@@ -13,7 +15,12 @@ document.addEventListener("DOMContentLoaded", () =>
         if (e.target.matches("[data-link]"))
         {
             e.preventDefault();
-            changeWindow(e.target.href);
+            link = e.target.href;
+            if(e.target.matches("[data-link-href]"))
+            {
+                link = e.target.getAttribute('data-link-href');
+            }
+            changeWindow(link);
         }
         if (e.target.matches("[run-script]"))
         {
