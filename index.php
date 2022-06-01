@@ -17,7 +17,7 @@
     <!-- font -->
     <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;500;700&display=swap" rel="stylesheet">
     <!-- font awesome icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://kit.fontawesome.com/f5d016d888.js" crossorigin="anonymous"></script>
 </head>
 <body>
     <?php require_once("header.php") ?>

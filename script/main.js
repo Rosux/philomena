@@ -24,6 +24,7 @@ document.addEventListener("DOMContentLoaded", () =>
         }
         if (e.target.matches("[run-script]"))
         {
+            // e.target.innerHTML = '<div class="load-icon"><div></div><div></div><div></div></div>';
             e.preventDefault();
             postForm(e.target.getAttribute("run-script"), e.target.closest('form'));
         }
@@ -37,10 +38,18 @@ function postForm(script, formdata)
         url: 'php/'+script,
         data: $(formdata).serialize(),
         success: function(data) {
+            // remove error messages to prevent doubles
+            $(".form-error").empty();
+            // if theres 0 errors do nothing
+            if(data == ""){
+                return;
+            }
             data = JSON.parse(data);
-            $(".form-error").find(`[error-name='']`).append(data["error"]);
-            $(".form-error").find(`[error-email='']`).append(data["errorEmail"]);
-            $(".form-error").find(`[error-pass='']`).append(data["errorPass"]);
+            // set all error messages
+            for (const property in data) {
+                console.log(`${property}: ${data[property]}`);
+                $(".form-error["+property+"]").append("<p>"+data[property]+"</p>");
+            }
         },
         error: function(){
             console.log("fail");
