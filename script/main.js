@@ -25,29 +25,27 @@ document.addEventListener("DOMContentLoaded", () =>
         if (e.target.matches("[run-script]"))
         {
             e.preventDefault();
-            postForm(e.target.getAttribute("run-script"));
+            postForm(e.target.getAttribute("run-script"), e.target.closest('form'));
         }
     });
 });
 
-function postForm(e)
+function postForm(script, formdata)
 {
     $.ajax({
         type: "POST",
-        url: 'php/'+e,
-        data: $("form").serialize(),
+        url: 'php/'+script,
+        data: $(formdata).serialize(),
         success: function(data) {
-            console.log(data);
+            data = JSON.parse(data);
+            $(".form-error").find(`[error-name='']`).append(data["error"]);
+            $(".form-error").find(`[error-email='']`).append(data["errorEmail"]);
+            $(".form-error").find(`[error-pass='']`).append(data["errorPass"]);
         },
         error: function(){
             console.log("fail");
         }
     });
-    // $.post('../php/'.e, $("form").serialize(), function(data) {
-    //     // Log the response to the console
-    //     console.log($("form").serialize());
-    //     // console.log("Response: "+data);
-    // });
 }
 
 // load default page

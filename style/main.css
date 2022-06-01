@@ -70,10 +70,17 @@ a{
     width: 100%;
     height: fit-content;
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
     margin-bottom: 10px;
+}
+.form-error{
+    width: 100%;
+    height: fit-content;
+    text-align: right;
+    color: #c40000;
+    font-size: 0.9em;
 }
 .form-row > input{
     font-size: var(--formfontsize);

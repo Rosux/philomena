@@ -3,20 +3,25 @@
         <img src="images/philomena-logo-diap.png" alt="Philomena Logo"> 
     </div>
     <div class="form">
-        <form action="" method="POST" class="ffff">
+        <form action="" method="POST">
             <div class="form-text">
                 <p>Registreren</p>
             </div>
+            <div class="form-error" error></div>
             <div class="form-row">
+                <div class="form-error" error-name></div>
                 <input type="text" name="name" value="" placeholder="Naam" required>
             </div>
             <div class="form-row">
+                <div class="form-error" error-mail></div>
                 <input type="email" name="email" value="" placeholder="Email" required>
             </div>
             <div class="form-row">
+                <div class="form-error" error-pass></div>
                 <input type="password" name="pass" value="" placeholder="Wachtwoord" required>
             </div>
             <div class="form-row">
+                <div class="form-error" error-pass-repeat></div>
                 <input type="password" name="pass2" value="" placeholder="Wachtwoord Herhalen" required>
             </div>
             <div class="form-row">

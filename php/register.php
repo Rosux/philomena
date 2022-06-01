@@ -2,7 +2,9 @@
     require_once "../php/user.php";
     $user = new User();
 
-
+    // $output['result'] = 'test123!!!';
+    // echo json_encode($output); // json encode here
+    // exit;
     
 
     // sent data
@@ -13,32 +15,38 @@
 
     // check if fields are empty
     if(empty($name) || empty($email) || empty($password) || empty($passwordRepeat)){
-        echo json_encode("Vul alle velden in.");
-        exit();
+        $output['error'] = "Vul alle velden in.";
     }
     // check if email is valid
     if(!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-        echo json_encode("Voer een geldige email in.");
-        exit();
+        $output['errorEmail'] .= "Voer een geldige email in.";
     }
     // check if username is longer than 4 and only containts a-Z and numbers
     if(strlen($name)<4 || strlen($name)>30 || preg_match('/[^A-Za-z0-9]/', $name)){
-        echo json_encode("De gebruikersnaam voldoet niet aan de eisen.");
-        exit();
+        $output['errorName'] .= "De gebruikersnaam voldoet niet aan de eisen.";
     }
     // Validate password strength
     $passFilter = "/^\S*(?=\S*[a-z])(?=\S*[A-Z])(?=\S*[\d])(?=\S*[\W])\S*$/";
     if (!preg_match($passFilter, $password) || strlen($password) < 8 || strlen($password) > 40) {
-        echo json_encode("Het wachtwoord voldoet niet aan de eisen.");
-        exit();
+        $output['errorPass'] .= "Het wachtwoord voldoet niet aan de eisen.";
     }
     // check if passwords match
     if($password != $passwordRepeat){
-        echo json_encode("Wachtwoorden komen niet overeen.");
-        exit();
+        $output['errorPassRepeat'] .= "Wachtwoorden komen niet overeen.";
     }
 
-    // register user
-    $user->register($name, $email, $password, $passwordRepeat);
+    if(!isset($output)){
+        // register user
+        $user->register($name, $email, $password, $passwordRepeat);
+        echo json_encode($output);
+        exit();
+    } else {
+        echo json_encode($output);
+        exit();
+    }
+    
+    
+
+    
     
 ?>
