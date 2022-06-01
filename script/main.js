@@ -18,17 +18,37 @@ document.addEventListener("DOMContentLoaded", () =>
             link = e.target.href;
             if(e.target.matches("[data-link-href]"))
             {
-                link = e.target.getAttribute('data-link-href');
+                link = e.target.getAttribute("data-link-href");
             }
             changeWindow(link);
         }
         if (e.target.matches("[run-script]"))
         {
-            // alert("gfdsgsd");
-            // runScript(e.target.href);
+            e.preventDefault();
+            postForm(e.target.getAttribute("run-script"));
         }
     });
 });
+
+function postForm(e)
+{
+    $.ajax({
+        type: "POST",
+        url: 'php/'+e,
+        data: $("form").serialize(),
+        success: function(data) {
+            console.log(data);
+        },
+        error: function(){
+            console.log("fail");
+        }
+    });
+    // $.post('../php/'.e, $("form").serialize(), function(data) {
+    //     // Log the response to the console
+    //     console.log($("form").serialize());
+    //     // console.log("Response: "+data);
+    // });
+}
 
 // load default page
 $(document).ready(function()

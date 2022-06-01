@@ -17,10 +17,7 @@
                 <input type="password" name="pass" value="" placeholder="Wachtwoord" required>
             </div>
             <div class="form-row">
-                <input type="submit" value="Inloggen" run-script="php/uwuwuwuuw.php">
-                <!-- <button id="submitbutton">
-                    <p>Inloggen</p>
-                </button> -->
+                <input type="submit" value="Inloggen"  run-script="login.php">
             </div>
         </form>
         <div class="form-links">

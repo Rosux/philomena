@@ -11,7 +11,7 @@
                 <input type="email" name="email" value="" placeholder="Email" required>
             </div>
             <div class="form-row">
-                <input type="submit" value="Email Versturen">
+                <input type="submit" value="Email Versturen" run-script="forgot-password.php">
             </div>
         </form>
         <div class="form-links">
