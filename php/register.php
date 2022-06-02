@@ -6,7 +6,7 @@
     // echo json_encode($output); // json encode here
     // exit;
     
-
+    sleep(3);
     // sent data
     $name = $_POST["name"];
     $email = $_POST["email"];
@@ -44,7 +44,7 @@
         echo json_encode($output);
         exit();
     }
-    
+
     // $user->register($name, $email, $password, $passwordRepeat);
     
     
