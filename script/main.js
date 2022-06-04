@@ -24,37 +24,67 @@ document.addEventListener("DOMContentLoaded", () =>
         }
         if (e.target.matches("[run-script]"))
         {
-            // e.target.innerHTML = '<div class="load-icon"><div></div><div></div><div></div></div>';
             e.preventDefault();
-            postForm(e.target.getAttribute("run-script"), e.target.closest('form'));
+            postForm(e.target.getAttribute("run-script"), e.target.closest('form'), e.target);
         }
     });
 });
 
-function postForm(script, formdata)
+function postForm(script, formdata, button)
 {
+    $(button).prop('disabled', true);
+    // do the loading overlay
     $.ajax({
         type: "POST",
         url: 'php/'+script,
         data: $(formdata).serialize(),
-        success: function(data) {
-            // remove error messages to prevent doubles
+        success: function(data)
+        {
             $(".form-error").empty();
-            // if theres 0 errors do nothing
-            if(data == ""){
+            if(data == undefined)
+            {
                 return;
             }
             data = JSON.parse(data);
+            if(data.redirect != undefined)
+            {
+                changeWindow(data.redirect);
+            }
             // set all error messages
-            for (const property in data) {
-                console.log(`${property}: ${data[property]}`);
-                $(".form-error["+property+"]").append("<p>"+data[property]+"</p>");
+            for (const property in data)
+            {
+                if(property != "redirect" && property != "result")
+                {
+                    console.log(`${property}: ${data[property]}`);
+                    $(".form-error["+property+"]").append("<p>"+data[property]+"</p>");
+                }
+            }
+            if(data.result != undefined)
+            {
+                // place result in input type thing
+                oldvalue = $(button).val();
+                $(button).val(data.result);
+                setInputValue(button, oldvalue);
             }
         },
-        error: function(){
+        error: function()
+        {
             console.log("fail");
+        },
+        complete: function()
+        {
+            // remove load overlay and enable form again
+            $(button).prop('disabled', false);
+
         }
     });
+}
+
+function setInputValue(button, value)
+{
+    setTimeout(function() {
+        $(button).val(value);
+    }, 3000);
 }
 
 // load default page

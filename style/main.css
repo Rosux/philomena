@@ -28,49 +28,6 @@ a{
     margin-top: var(--headerheight);
     display: none;
 }
-/* load icon */
-.load-icon{
-    width: 25em; /* change spacing between dots */
-    height: 13em; /* change dot size/height kinda weird/broken lol */
-    display: flex;
-    justify-content: space-evenly;
-    background-color: black;
-}
-.load-icon > div{
-    margin-top: 25%;
-    height: calc(100% / 4); /* change size of dots */
-}
-.load-icon > div::after{
-    content: "";
-    display: block;
-    position: relative;
-    aspect-ratio: 1/1;
-    height: 100%;
-    background-color: white;
-    transform: translate(0, -50%);
-    border-radius: 100%;
-    animation: load 1s ease-in-out infinite;
-}
-.load-icon > div:nth-child(1)::after {
-    animation-delay: 0;
-}
-.load-icon > div:nth-child(2)::after {
-    animation-delay: 0.3s;
-}
-.load-icon > div:nth-child(3)::after {
-    animation-delay: 0.6s;
-}
-@keyframes load {
-    0% {
-        transform: translate(0, -50%);
-    }
-    25%{
-        transform: translate(0, -200%);/* change -200% to specify animation height*/
-    }
-    50%, 100%{
-        transform: translate(0, -50%);
-    }
-}
 /* form presets */
 .form-wrapper{
     width: 100%;
@@ -186,7 +143,42 @@ a{
 .header-links > a > i{
     font-size: calc(var(--headerfontsize) * 1.5);
 }
-
+/* appointments */
+.appoin{
+    width: 100%;
+    height: fit-content;
+    color: white;
+    padding-top: 2em;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.appoin-title{
+    font-weight: bold;
+    font-size: 3em;
+    text-align: center;
+}
+.appoin-wrapper{
+    padding-top: 2em;
+    width: 70%;
+    height: fit-content;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+.appointment{
+    height: fit-content;
+    width: calc(100% / 3 - 4em);
+    background-color: white;
+    border-radius: 15px;
+    border: solid 2px gray;
+    color: black;
+    padding: 1.5em;
+    font-size: 1.3em;
+    margin-bottom: 1em;
+}
 
 
 
@@ -206,4 +198,3 @@ a{
         min-height: 200px;
     }
 }
-

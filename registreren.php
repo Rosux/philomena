@@ -9,8 +9,12 @@
             </div>
             <div class="form-error" error></div>
             <div class="form-row">
-                <div class="form-error" error-name></div>
-                <input type="text" name="name" value="" placeholder="Naam" required>
+                <div class="form-error" error-first-name></div>
+                <input type="text" name="firstname" value="" placeholder="Voornaam" required>
+            </div>
+            <div class="form-row">
+                <div class="form-error" error-last-name></div>
+                <input type="text" name="lastname" value="" placeholder="Achternaam" required>
             </div>
             <div class="form-row">
                 <div class="form-error" error-mail></div>
