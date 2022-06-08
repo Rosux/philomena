@@ -8,157 +8,133 @@
 let defaultPage = "index.php";
 
 // prevent links from working if they have the "data-link" in their <>
-document.addEventListener("DOMContentLoaded", () =>
-{
-    document.body.addEventListener("click", e =>
-    {
-        if (e.target.matches("[data-link]"))
-        {
+document.addEventListener("DOMContentLoaded", () => {
+    document.body.addEventListener("click", e => {
+        if (e.target.matches("[data-link]")) {
             e.preventDefault();
             link = e.target.href;
-            if(e.target.matches("[data-link-href]"))
-            {
+            if (e.target.matches("[data-link-href]")) {
                 link = e.target.getAttribute("data-link-href");
             }
             changeWindow(link);
         }
-        if (e.target.matches("[run-script]"))
-        {
+        if (e.target.type == "submit") {
             e.preventDefault();
-            postForm(e.target.getAttribute("run-script"), e.target.closest('form'), e.target);
+            postForm(e.target);
         }
     });
 });
 
-function postForm(script, formdata, button)
-{
+function postForm(button) {
     $(button).prop('disabled', true);
     // do the loading overlay
     $.ajax({
         type: "POST",
-        url: 'php/'+script,
-        data: $(formdata).serialize(),
-        success: function(data)
-        {
+        url: button.closest('form').action,
+        data: $(button.closest('form')).serialize(),
+        success: function(data) {
             $(".form-error").empty();
-            if(data == undefined)
-            {
+            if (data == undefined) {
                 return;
             }
             data = JSON.parse(data);
-            if(data.redirect != undefined)
-            {
-                changeWindow(data.redirect);
+            if (data.redirect != undefined) {
+                setTimeout(function() {
+                    changeWindow(data.redirect);
+                }, 2000);
             }
             // set all error messages
-            for (const property in data)
-            {
-                if(property != "redirect" && property != "result")
-                {
+            for (const property in data) {
+                if (property != "redirect" && property != "result") {
                     console.log(`${property}: ${data[property]}`);
-                    $(".form-error["+property+"]").append("<p>"+data[property]+"</p>");
+                    $(".form-error[" + property + "]").append("<p>" + data[property] + "</p>");
                 }
             }
-            if(data.result != undefined)
-            {
-                // place result in input type thing
+            if (data.result != undefined) {
+                // place result in button
                 oldvalue = $(button).val();
                 $(button).val(data.result);
                 setInputValue(button, oldvalue);
             }
         },
-        error: function()
-        {
-            console.log("fail");
+        error: function() {
+            oldvalue = $(button).val();
+            $(button).val("fout opgetreden.");
+            setInputValue(button, oldvalue);
         },
-        complete: function()
-        {
+        complete: function() {
             // remove load overlay and enable form again
-            $(button).prop('disabled', false);
-
+            setTimeout(function() {
+                $(button).prop('disabled', false);
+            }, 3000);
         }
     });
 }
 
-function setInputValue(button, value)
-{
+function setInputValue(button, value) {
     setTimeout(function() {
         $(button).val(value);
-    }, 3000);
+    }, 1000);
 }
 
 // load default page
-$(document).ready(function()
-{
+$(document).ready(function() {
     const regex = /philomena|\/|\.php|\.html/g;
     urlPage = window.location.href.replace(regex, "").replace(window.location.hostname, "").replace(window.location.protocol, "");
-    if(urlPage == "" || urlPage == "index")
-    {
+    if (urlPage == "" || urlPage == "index") {
         changeWindow(defaultPage);
         document.title = "Philomena";
         return;
     }
-    changeWindow(urlPage+".php");
+    changeWindow(urlPage + ".php");
 });
 
 // when going forward/backward change content
-addEventListener('popstate', e =>
-{
+addEventListener('popstate', e => {
     const regex = /philomena|\/|\.php|\.html/g;
     urlPage = window.location.href.replace(regex, "").replace(window.location.hostname, "").replace(window.location.protocol, "");
-    if(urlPage == "" || urlPage == "index")
-    {
+    if (urlPage == "" || urlPage == "index") {
         changeWindow(window.location.href, true, false);
     } else {
-        changeWindow(window.location.href+".php", true, false);
+        changeWindow(window.location.href + ".php", true, false);
     }
 });
 
 // changes window title
-function changeTitle(page)
-{
+function changeTitle(page) {
     const regex = /philomena|\/|\.php|\.html/g;
     page = (page.replace(regex, "").replace("-", " ").replace(window.location.hostname, "").replace(window.location.protocol, ""));
     document.title = "Philomena - " + page.charAt(0).toUpperCase() + page.slice(1);
 }
 
 // changes window to linked window
-function changeWindow(e, changetitle=true, changeurl=true)
-{
+function changeWindow(e, changetitle = true, changeurl = true) {
     const regex = /philomena|\/|\.php|\.html/g;
     url = e.replace(regex, "").replace(window.location.hostname, "").replace(window.location.protocol, "");
-    if(url == "index" || url == "")
-    {
-        $('.content').load(defaultPage+" .philomena-import").hide().fadeIn(500);
-        if(changetitle)
-        {
+    if (url == "index" || url == "") {
+        $('.content').load(defaultPage + " .philomena-import").hide().fadeIn(500);
+        if (changetitle) {
             document.title = "Philomena";
         }
-        if(changeurl)
-        {
-            changeURL(window.location.protocol+"//"+window.location.hostname+"/philomena/");
+        if (changeurl) {
+            changeURL(window.location.protocol + "//" + window.location.hostname + "/philomena/");
         }
         return;
-    }else{
+    } else {
         setURLonce = 0; //1==true 0==false
-        $('.content').load(e+" .philomena-import", function(responseText, statusText, returnError)
-        {
-            if (statusText == "success")
-            {
+        $('.content').load(e + " .philomena-import", function(responseText, statusText, returnError) {
+            if (statusText == "success") {
                 setURLonce++;
-                if(setURLonce == 1){
-                    if(changeurl)
-                    {
+                if (setURLonce == 1) {
+                    if (changeurl) {
                         changeURL(e);
                     }
-                    if(changetitle)
-                    {
+                    if (changetitle) {
                         changeTitle(e);
                     }
                 }
             } else {
-                if(returnError.status == 404)
-                {
+                if (returnError.status == 404) {
                     $('.content').load("404.php .philomena-import");
                     changeURL("404.php");
                     changeTitle("404");
@@ -170,8 +146,7 @@ function changeWindow(e, changetitle=true, changeurl=true)
 }
 
 // adds url to browser history + changes url in window
-function changeURL(x)
-{
+function changeURL(x) {
     history.pushState(null, null, x.replace(".php", ""));
 }
 

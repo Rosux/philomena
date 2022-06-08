@@ -3,7 +3,7 @@
         <img src="images/philomena-logo-diap.png" alt="Philomena Logo"> 
     </div>
     <div class="form">
-        <form action="" method="POST">
+        <form action="php/register.php" method="POST">
             <div class="form-text">
                 <p>Registreren</p>
             </div>
@@ -29,7 +29,7 @@
                 <input type="password" name="pass2" value="" placeholder="Wachtwoord Herhalen" required>
             </div>
             <div class="form-row">
-                <input type="submit" value="Registreren" run-script="register.php">
+                <input type="submit" value="Registreren">
             </div>
         </form>
         <div class="form-links">

@@ -1,6 +1,4 @@
 <?php
-    require_once "../php/user.php";
-    $user = new User();
     // set data
     $firstname = $_POST["firstname"];
     $lastname = $_POST["lastname"];
@@ -44,9 +42,12 @@
         echo json_encode($output);
         exit();
     }
+    require_once "../php/user.php";
+    $user = new User();
     // register user
     if($user->register($firstname, $lastname, $email, $password)){
         $output['result'] = "U bent aangemeld.";
+        $output['redirect'] = "verifieeren.php";
     }else{
         $output['result'] = "Fout opgetreden probeer het later opnieuw.";
     }

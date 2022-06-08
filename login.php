@@ -6,7 +6,7 @@
         <img src="images/philomena-logo-diap.png" alt="Philomena Logo"> 
     </div>
     <div class="form">
-        <form action="" method="POST">
+        <form action="php/login.php" method="POST">
             <div class="form-text">
                 <p>Inloggen</p>
             </div>
@@ -17,7 +17,7 @@
                 <input type="password" name="pass" value="" placeholder="Wachtwoord" required>
             </div>
             <div class="form-row">
-                <input type="submit" value="Inloggen"  run-script="login.php">
+                <input type="submit" value="Inloggen">
             </div>
         </form>
         <div class="form-links">

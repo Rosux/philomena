@@ -3,7 +3,7 @@
         <img src="images/philomena-logo-diap.png" alt="Philomena Logo"> 
     </div>
     <div class="form">
-        <form action="" method="POST">
+        <form action="php/forgot-password.php" method="POST">
             <div class="form-text">
                 <p>Wachtwoord Vergeten</p>
             </div>
@@ -11,7 +11,7 @@
                 <input type="email" name="email" value="" placeholder="Email" required>
             </div>
             <div class="form-row">
-                <input type="submit" value="Email Versturen" run-script="forgot-password.php">
+                <input type="submit" value="Email Versturen">
             </div>
         </form>
         <div class="form-links">

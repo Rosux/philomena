@@ -44,36 +44,42 @@
                 echo json_encode($output);
                 exit();
             }
-            $activationCode = bin2hex(random_bytes(16));
             // prepare and execute
-            $stmt = $this->conn->prepare("INSERT INTO users (first_name, last_name, email, password, create_date, update_date, activation_code, activation_expiry) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
+            $stmt = $this->conn->prepare("INSERT INTO users (first_name, last_name, email, password, create_date, update_date) VALUES (?, ?, ?, ?, ?, ?)");
             $stmt->execute([
                 htmlspecialchars($firstname),
                 htmlspecialchars($lastname),
                 $email,
                 password_hash($password, PASSWORD_DEFAULT),
                 date("Y/m/d/h/m/s"),
-                date("Y/m/d/h/m/s"),
-                $activationCode,
-                date("Y/m/d/h/m/s", strtotime("+3 days"))
+                date("Y/m/d/h/m/s")
             ]);
-            if($stmt->rowCount() > 0){
-                $this->sendActivationCode($email, $activationCode, $firstname, $lastname);
-                return true;
+            if($stmt->rowCount() == 0){
+                return false;
             }
-            return false;
+            return true;
         }
 
-        public function sendActivationCode($email, $code, $firstname, $lastname){
-            
-        }
-
-        // public function activateUser($email){
-        //     $d=strtotime("+3 days");
-        //     $activationExpiry = date("Y/m/d/h/m/s", $d);
-        //     $stmt = $this->conn->prepare("UPDATE users SET active=1, update_date=? WHERE email=?");
+        // public function activateUser($email, $activationCode){
+        //     // check if email and code are right
+        //     $stmt = $this->conn->prepare("SELECT * FROM users WHERE email=? LIMIT 1");
         //     $stmt->execute([
-        //         $activationExpiry,
+        //         $email
+        //     ]);
+        //     if($stmt->rowCount() == 0){
+        //         $output['error'] = "Gebruiker niet gevonden.";
+        //         echo json_encode($output);
+        //         exit();
+        //     }
+        //     $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        //     if($data[0]["activation_code"] != $activationCode){
+        //         $output['error'] = "De activatie code komt niet overeen.";
+        //         echo json_encode($output);
+        //         exit();
+        //     }
+        //     $stmt = $this->conn->prepare("UPDATE users SET active=1, activation_code=null, activation_expiry=null, update_date=? WHERE email=?");
+        //     $stmt->execute([
+        //         date("Y/m/d/h/m/s"),
         //         $email
         //     ]);
         //     if($stmt->rowCount() > 0){
@@ -82,8 +88,39 @@
         //     return false;
         // }
 
-        public function login($email, $password){
-            
+        public function login($email, $password, $remember=false){
+            $stmt = $this->conn->prepare("SELECT * FROM users WHERE email=? LIMIT 1");
+            $stmt->execute([
+                $email
+            ]);
+            if($stmt->rowCount() == 0){
+                $output['error'] = "Gebruiker niet gevonden.";
+                echo json_encode($output);
+                exit();
+            }
+            $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            if(password_verify($password, $data[0]["password"])){
+                $output['error'] = "Het Wachtwoord komt niet overeen.";
+                echo json_encode($output);
+                exit();
+            }
+            $_SESSION["id"] = $data[0]['id'];
+            if($remember){
+                $logintoken = bin2hex(random_bytes(32));
+                // create a login token in db and in cookies, anytime you require a login it checks if the token and cookie match. if so ur logged in and a new token gets generated every time
+                $stmt = $this->conn->prepare("UPDATE users SET login_token=?, update_date=? WHERE email=?");
+                $stmt->execute([
+                    password_hash($logintoken, PASSWORD_DEFAULT),
+                    date("Y/m/d/h/m/s"),
+                    $email
+                ]);
+                if($stmt->rowCount() == 0){
+                    $output['error'] = "Fout opgetreden. Kan gebruiker niet onthouden.";
+                    echo json_encode($output);
+                    exit();
+                }
+                return true;
+            }
         }
     }
 ?>
