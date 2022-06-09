@@ -97,6 +97,16 @@ a{
     border-radius: 100px;
     font-family: 'Rubik', sans-serif;
 }
+.row-checkbox-text{
+    flex-direction: row;
+}
+.form-row > input[type=checkbox]{
+    width: fit-content;
+    font-size: var(--formfontsize);
+}
+.form-row > p{
+    font-size: var(--formfontsize);
+}
 .form-links{
     width: 100%;
     height: fit-content;
@@ -116,6 +126,7 @@ a{
     display: flex;
     flex-direction: row;
     justify-content: space-between;
+    z-index: 10;
 }
 .header-logo{
     width: fit-content;

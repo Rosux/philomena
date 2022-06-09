@@ -61,6 +61,9 @@ function postForm(button) {
             oldvalue = $(button).val();
             $(button).val("fout opgetreden.");
             setInputValue(button, oldvalue);
+            setTimeout(function() {
+                $(button).prop('disabled', false);
+            }, 3000);
         },
         complete: function() {
             // remove load overlay and enable form again

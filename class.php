@@ -23,7 +23,6 @@ class Customer {
 
         session_start();
         if($this->loggedIn()) {
-            $_SESSION["customer"] = true;
             $this->customerData();
         } else {
             // $_SESSION["customer"] = false;

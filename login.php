@@ -10,11 +10,17 @@
             <div class="form-text">
                 <p>Inloggen</p>
             </div>
+            <div class="form-error" error></div>
             <div class="form-row">
+                <div class="form-error" error-mail></div>
                 <input type="email" name="email" value="" placeholder="Email" required>
             </div>
             <div class="form-row">
+                <div class="form-error" error-pass></div>
                 <input type="password" name="pass" value="" placeholder="Wachtwoord" required>
+            </div>
+            <div class="form-row row-checkbox-text">
+                <input type="checkbox" name="keeploggedin"><p>blijf ingelogt</p>
             </div>
             <div class="form-row">
                 <input type="submit" value="Inloggen">
