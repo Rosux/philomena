@@ -17,6 +17,18 @@
                 <input type="text" name="lastname" value="" placeholder="Achternaam" required>
             </div>
             <div class="form-row">
+                <div class="form-error" error-street></div>
+                <input type="text" name="street" value="" placeholder="Straat" required>
+            </div>
+            <div class="form-row">
+                <div class="form-error" error-postal-code></div>
+                <input type="email" name="postal-code" value="" placeholder="Postcode" required>
+            </div>
+            <div class="form-row">
+                <div class="form-error" error-livingplace></div>
+                <input type="email" name="livingplace" value="" placeholder="Woonplaats" required>
+            </div>
+            <div class="form-row">
                 <div class="form-error" error-mail></div>
                 <input type="email" name="email" value="" placeholder="Email" required>
             </div>

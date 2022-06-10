@@ -1,5 +1,14 @@
 <div class="philomena-import">
+    <?php
+        require_once "php/user.php";
+        $user = new User();
+        $user->protectPage();
+    ?>
     <div class="appoin">
+        <div class="appoin-user">
+            <p>Welkom <?php echo $user->firstname ?></p>
+            <button>NIEUWE AFSPRAAK</button>
+        </div>
         <div class="appoin-title">
             <p>Afspraken</P>
         </div>
@@ -25,7 +34,4 @@
 
 
 
-    <?php
-        
-    ?>
 </div>

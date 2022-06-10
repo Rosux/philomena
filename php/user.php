@@ -11,7 +11,9 @@
         public $firstname;
         public $lastname;
         public $email;
-        public $image;
+        public $street;
+        public $postalcode;
+        public $livingplace;
 
         public function __construct() {
             require_once "pdo.php";
@@ -19,26 +21,27 @@
             session_start();
             if($this->checkLoggedIn()){
                 $this->setUserData();
-            }else{
-                $this->logout();
             }
         }
 
         private function setUserData() {
             $stmt = $this->conn->prepare("SELECT * FROM users WHERE id=?");
             if(!$stmt->execute([$_SESSION["id"]])){
-                $output['error'] = "Server Error: User not found";
-                echo json_encode($output);
+                $this->logout();
+                header("Location: ./login.php");
                 exit();
             }
             $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
             $this->id = $data[0]["id"];
-            $this->firstname = $data[0]["name"];
+            $this->firstname = $data[0]["first_name"];
+            $this->lastname = $data[0]["last_name"];
             $this->email = $data[0]["email"];
-            $this->image = $data[0]["profile-image"];
+            $this->street = $data[0]["street"];
+            $this->postalcode = $data[0]["postal_code"];
+            $this->livingplace = $data[0]["living_place"];
         }
 
-        public function register($firstname, $lastname, $email, $password) {
+        public function register($firstname, $lastname, $email, $password, $street, $postalcode, $livingplace) {
             $stmt = $this->conn->prepare("SELECT * FROM users WHERE email=?");
             $stmt->execute([$email]);
             $user = $stmt->fetch();
@@ -49,14 +52,17 @@
                 exit();
             }
             // prepare and execute
-            $stmt = $this->conn->prepare("INSERT INTO users (first_name, last_name, email, password, create_date, update_date) VALUES (?, ?, ?, ?, ?, ?)");
+            $stmt = $this->conn->prepare("INSERT INTO users (first_name, last_name, email, password, create_date, update_date, street, postal_code, living_place) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
             $stmt->execute([
                 htmlspecialchars($firstname),
                 htmlspecialchars($lastname),
                 $email,
                 password_hash($password, PASSWORD_DEFAULT),
                 date("Y/m/d/h/m/s"),
-                date("Y/m/d/h/m/s")
+                date("Y/m/d/h/m/s"),
+                htmlspecialchars($street),
+                htmlspecialchars($postalcode),
+                htmlspecialchars($livingplace)
             ]);
             if($stmt->rowCount() == 0){
                 return false;
@@ -64,6 +70,7 @@
             return true;
         }
 
+        // only used if i want to implement some annoying activation code and stuff :) maar geen zin in
         // public function activateUser($email, $activationCode){
         //     // check if email and code are right
         //     $stmt = $this->conn->prepare("SELECT * FROM users WHERE email=? LIMIT 1");
@@ -115,7 +122,7 @@
                 $email
             ]);
             $_SESSION["id"] = $data[0]['id'];
-            $_SESSION["email"] = $email;
+            $this->setUserData();
             if($remember){
                 $logintoken = bin2hex(random_bytes(32));
                 // anytime you require a login it checks if the token and cookie match. if so ur logged in and a new token gets generated every time
@@ -146,11 +153,19 @@
             session_destroy();
         }
 
-        protected function checkLoggedIn() {
+        public function checkLoggedIn() {
             if(isset($_SESSION["id"])) {
                 return true;
             } else {
                 return false;
+            }
+        }
+
+        public function protectPage(){
+            if(!$this->checkLoggedIn()){
+                $this->logout();
+                header("Location: ./login.php");
+                exit();
             }
         }
     }

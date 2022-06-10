@@ -14,14 +14,22 @@
     if(isset($_POST["keeploggedin"])){
         if($user->login($email, $password, true)){
             $output['result'] = "U bent ingelogt";
-            $output['redirect'] = "profile.php";
+            if(isset($_POST["redirect"])){
+                $output['redirect'] = $_POST["redirect"];
+            }else{
+                $output['redirect'] = "profiel.php";
+            }
         }else{
             $output['result'] = "Fout opgetreden probeer het later opnieuw.";
         }
     }else{
         if($user->login($email, $password)){
             $output['result'] = "U bent ingelogt";
-            $output['redirect'] = "profile.php";
+            if(isset($_POST["redirect"])){
+                $output['redirect'] = $_POST["redirect"];
+            }else{
+                $output['redirect'] = "profiel.php";
+            }
         }else{
             $output['result'] = "Fout opgetreden probeer het later opnieuw.";
         }

@@ -26,7 +26,6 @@ a{
 }
 .content{
     margin-top: var(--headerheight);
-    display: none;
 }
 /* form presets */
 .form-wrapper{
@@ -192,7 +191,23 @@ a{
     font-size: 1.3em;
     margin-bottom: 1em;
 }
-
+.appoin-user{
+    width: 70%;
+    font-size: 1.5em;
+}
+.appoin-user > button{
+    margin-top: 10px;
+    width: fit-content;
+    height: fit-content;
+    color: var(--maincolor);
+    background-color: rgb(255, 213, 0);
+    border: none;
+    inset: none;
+    padding: 0.8em;
+    font-size: 0.7em;
+    border-radius: 10px;
+    cursor: pointer;
+}
 
 
 

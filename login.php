@@ -1,6 +1,3 @@
-<?php
-    session_start();
-?>
 <div class="form-wrapper philomena-import">
     <div class="form-image">
         <img src="images/philomena-logo-diap.png" alt="Philomena Logo"> 
@@ -23,6 +20,7 @@
                 <input type="checkbox" name="keeploggedin"><p>blijf ingelogt</p>
             </div>
             <div class="form-row">
+                <input type="text" id="login-redirect" name="redirect" value="" style="display: none;">
                 <input type="submit" value="Inloggen">
             </div>
         </form>

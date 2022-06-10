@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="nl">
 <head>
-    <meta property="og:title" content="testtest" />
+    <meta property="og:title" content="Philomena" />
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -21,9 +21,6 @@
 </head>
 <body>
     <?php require_once("header.php") ?>
-    <script>
-        $(".content").hide();
-    </script>
     <div class="content philomena-import">
         <h1>
             DIT IS DE HOME PAGE!

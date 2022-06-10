@@ -18,7 +18,7 @@ document.addEventListener("DOMContentLoaded", () => {
             }
             changeWindow(link);
         }
-        if (e.target.type == "submit") {
+        if(e.target.matches("input[type=submit]")){
             e.preventDefault();
             postForm(e.target);
         }
@@ -28,6 +28,11 @@ document.addEventListener("DOMContentLoaded", () => {
 function postForm(button) {
     $(button).prop('disabled', true);
     // do the loading overlay
+    const regex = /philomena|\/|\.php|\.html/g;
+    pageUrl = window.location.href.replace(regex, "").replace(window.location.hostname, "").replace(window.location.protocol, "");
+    if(button.closest('form').action == window.location.protocol + "//" + window.location.hostname + "/philomena/" + "php/login.php" && pageUrl != 'login'){
+        document.getElementById("login-redirect").setAttribute('value', pageUrl+".php");
+    }
     $.ajax({
         type: "POST",
         url: button.closest('form').action,
