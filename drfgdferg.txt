@@ -1,0 +1,2 @@
+2 tables for randomized codes
+1 table for expiration

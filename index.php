@@ -21,10 +21,11 @@
 </head>
 <body>
     <?php require_once("header.php") ?>
+    <div class="overlay"></div>
     <div class="content philomena-import">
-        <h1>
-            DIT IS DE HOME PAGE!
-        </h1>
+        <div class="section-wrapper">
+            <div class="section-title">Home Page</div>
+        </div>
     </div>
     <?php //require_once("footer.php") ?>
 </body>

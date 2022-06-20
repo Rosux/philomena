@@ -5,6 +5,6 @@
     <div class="header-links">
         <a href="dashboard.php" data-link>dashboard</a>
         <a href="login.php" data-link>Login</a>
-        <a href="profiel" data-link><i class="fa-solid fa-user" data-link-href="profiel"></i></a>
+        <a href="profiel.php" data-link>profiel</a>
     </div>
 </div>

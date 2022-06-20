@@ -14,6 +14,7 @@ document.addEventListener("DOMContentLoaded", () => {
             e.preventDefault();
             link = e.target.href;
             if (e.target.matches("[data-link-href]")) {
+                e.preventDefault();
                 link = e.target.getAttribute("data-link-href");
             }
             changeWindow(link);

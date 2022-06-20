@@ -39,6 +39,7 @@
             $this->street = $data[0]["street"];
             $this->postalcode = $data[0]["postal_code"];
             $this->livingplace = $data[0]["living_place"];
+            $this->worker = $data[0]["worker"];
         }
 
         public function register($firstname, $lastname, $email, $password, $street, $postalcode, $livingplace) {
@@ -98,6 +99,31 @@
         //     }
         //     return false;
         // }
+
+        public function getAllAppointments(){
+            if($this->worker != 1){
+                return false;
+            }
+            $stmt = $this->conn->prepare("SELECT * FROM appointments");
+            $stmt->execute();
+            if($stmt->rowCount() == 0){
+                return false;
+            }
+            $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            return $data;
+        }
+
+        public function getAppointments(){
+            $stmt = $this->conn->prepare("SELECT * FROM appointments WHERE user_id=?");
+            $stmt->execute([
+                $this->id
+            ]);
+            if($stmt->rowCount() == 0){
+                return false;
+            }
+            $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            return $data;
+        }
 
         public function login($email, $password, $remember=false){
             $stmt = $this->conn->prepare("SELECT * FROM users WHERE email=? LIMIT 1");

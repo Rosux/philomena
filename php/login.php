@@ -17,7 +17,7 @@
             if(isset($_POST["redirect"])){
                 $output['redirect'] = $_POST["redirect"];
             }else{
-                $output['redirect'] = "profiel.php";
+                $output['redirect'] = "profiel.php"; // redirect after loggin in
             }
         }else{
             $output['result'] = "Fout opgetreden probeer het later opnieuw.";
@@ -28,7 +28,7 @@
             if(isset($_POST["redirect"])){
                 $output['redirect'] = $_POST["redirect"];
             }else{
-                $output['redirect'] = "profiel.php";
+                $output['redirect'] = "profiel.php"; // redirect after loggin in
             }
         }else{
             $output['result'] = "Fout opgetreden probeer het later opnieuw.";
