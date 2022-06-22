@@ -3,10 +3,10 @@
         require_once "php/user.php";
         $user = new User();
         $user->protectPage();
-        if($user->worker != 1){
-            $appointments = $user->getAppointments();
-        }else{
+        if($user->worker == 1){
             $appointments = $user->getAllAppointments();
+        }else{
+            $appointments = $user->getAppointments();
         }
         // appointment example
         // $appointments[i]["date"]
@@ -16,7 +16,7 @@
     <div class="appoin">
         <div class="appoin-user">
             <p>Welkom <?php echo $user->firstname; ?></p>
-            <button>NIEUWE AFSPRAAK</button>
+            <button onclick="makeAppointment()">NIEUWE AFSPRAAK</button>
         </div>
         <div class="appoin-title">
             <p>Afspraken</p>
@@ -30,22 +30,16 @@
             }else{
                 for($i=0; $i < count($appointments); $i++){
                     echo '<div class="appointment">';
-                    echo '<div class="appointment-time"><p>'.$appointments[$i]["date"].'</p></div>';
-                    echo '<div class="appointment-type"><p>'.$appointments[$i]["behandeling_id"].'</p></div>';
-
-
-
-
+                    echo '<div class="appointment-date"><p>'.$appointments[$i]["date"]." - ".$appointments[$i]["time"].'</p></div>';
+                    echo '<div class="appointment-type"><p>'.
+                        $user->getTreatment($appointments[$i]["behandeling_id"])[$i]["name"]
+                    .'</p></div>';
                     // fix
-                    // only display if user is worker
-                    echo '<div class="appointment-status"><p>'.$appointments[$i]["status"].'</p></div>';
-                    echo '<div class="appointment-name"><p>'.$appointments[$i]["user_id"].'</p></div>';
-                    echo '<div class="appointment-worker"><p>'.$appointments[$i]["med_id"].'</p></div>';
-
-
-
-
-
+                    if($user->worker == 1){
+                        echo '<div class="appointment-status"><p>'.$appointments[$i]["status"].'</p></div>';
+                        echo '<div class="appointment-name"><p>'.$appointments[$i]["user_id"].'</p></div>';
+                        echo '<div class="appointment-worker"><p>'.$appointments[$i]["med_id"].'</p></div>';
+                    }
                     echo '</div>';
                 }
             }

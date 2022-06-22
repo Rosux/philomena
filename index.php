@@ -11,6 +11,7 @@
     <!-- js -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="script/main.js"></script>
+    <script defer src="script/appointments.js"></script>
     <!-- css -->
     <link rel="stylesheet" href="style/main.css">
     <link rel="stylesheet" href="style/404.css">

@@ -177,19 +177,22 @@ a{
     display: flex;
     flex-direction: row;
     align-items: center;
-    justify-content: space-between;
+    justify-content: flex-start;
     flex-wrap: wrap;
 }
 .appointment{
     height: fit-content;
-    width: calc(100% / 3 - 4em);
+    width: calc(100% / 3 - 1.5em);
     background-color: white;
     border-radius: 15px;
     border: solid 2px gray;
     color: black;
     padding: 1.5em;
     font-size: 1.3em;
-    margin-bottom: 1em;
+    margin-bottom: 1.5em;
+    box-sizing: border-box;
+    margin-right: calc(1.5em / 2);
+    margin-left: calc(1.5em / 2);
 }
 .appoin-user{
     width: 70%;
@@ -212,23 +215,6 @@ a{
     text-align: center;
     width: 100%;
 }
-/* screen overlay or like login and stuff */
-.overlay{
-    position: absolute;
-    width: 100%;
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    padding: 50px 0;
-    background-color: rgba(000, 000, 000, 0.5);
-    z-index: 20;
-    top: 0;
-    left: 0;
-    box-sizing: border-box;
-    display: none;
-}
 /* home page */
 .section-wrapper{
     width: 100%;
@@ -244,6 +230,140 @@ a{
     margin: 50px 0;
     font-size: 3em;
 }
+/* screen overlay for login and stuff */
+.overlay{
+    position: absolute;
+    width: 100%;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 50px 0;
+    background-color: rgba(000, 000, 000, 0.7);
+    z-index: 20;
+    top: 0;
+    left: 0;
+    box-sizing: border-box;
+    display: none;
+}
+.overlay > .philomena-import{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: fit-content;
+    min-height: fit-content;
+}
+/* new appointment menu */
+.new-appointment-wrapper{
+    border: solid 2px grey;
+    padding: 3em 4em;
+    background-color: var(--formbg);
+    width: 45%;
+    height: fit-content;
+    border-radius: 20px;
+    min-width: 350px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+.new-appointment-title{
+    width: 100%;
+    margin: 0 0 1em 0;
+}
+.new-appointment-title > p{
+    font-weight: 700;
+    padding: 0;
+    margin: 0;
+    width: 100%;
+    text-align: center;
+    color: var(--accentcolor);
+    font-size: calc(var(--formfontsize) * 2);
+}
+.new-appointment-row{
+    width: 100%;
+    height: fit-content;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+}
+.new-appointment-row > p{
+    padding: 0.7em 0.4em;
+    cursor: pointer;
+}
+.new-appointment-row-current{
+    box-shadow: 0px 0px 0px 2px rgb(0, 0, 0) inset;
+}
+.new-appointment-inner-wrapper-treatments{
+    margin-top: 25px;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+}
+.new-appointment-inner-wrapper-treatments > div{
+    width: calc(50% - 10px);
+}
+.treatment-row-title{
+    width: 100%;
+    text-align: left;
+    font-weight: 700;
+}
+.treatment-row-title{
+    margin-top: 25px;
+}
+.treatment-row{
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: space-between;
+    border-bottom: 1px solid black;
+    cursor: pointer;
+}
+.treatment-row:hover{
+    background-color: rgb(230, 230, 230);
+}
+/* selected-row = currently selected treatments */
+.selected-row{
+    background-color: #9cda9e;
+}
+.new-appointment-price{
+    width: 100%;
+    margin: 25px 0;
+}
+.new-appointment-price > h2{
+    text-align: center;
+}
+.new-appointment-price > h2 > a{
+    text-decoration: none;
+}
+.new-appointment-navigation{
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+}
+.new-appointment-navigation > button{
+    width: fit-content;
+    padding: 0.85em 2.4em;
+    font-size: 1em;
+    background-color: white;
+    border-radius: 10px;
+    border: solid 1px black;
+    cursor: pointer;
+}
+
+
+
+
 
 
 

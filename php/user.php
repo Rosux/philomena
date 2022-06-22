@@ -104,7 +104,7 @@
             if($this->worker != 1){
                 return false;
             }
-            $stmt = $this->conn->prepare("SELECT * FROM appointments");
+            $stmt = $this->conn->prepare("SELECT * FROM appointments ORDER BY date DESC, time");
             $stmt->execute();
             if($stmt->rowCount() == 0){
                 return false;
@@ -114,10 +114,37 @@
         }
 
         public function getAppointments(){
-            $stmt = $this->conn->prepare("SELECT * FROM appointments WHERE user_id=?");
+            $stmt = $this->conn->prepare("SELECT * FROM appointments WHERE user_id=? ORDER BY date DESC, time");
             $stmt->execute([
                 $this->id
             ]);
+            if($stmt->rowCount() == 0){
+                return false;
+            }
+            $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            return $data;
+        }
+
+        public function getTreatment(int $id){
+            $stmt = $this->conn->prepare("SELECT * FROM treatments WHERE id=?");
+            $stmt->execute([
+                $id
+            ]);
+            if($stmt->rowCount() == 0){
+                return false;
+            }
+            $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            return $data;
+        }
+
+        public function getAllTreatments(string $category=null){
+            if($category != null){
+                $stmt = $this->conn->prepare("SELECT * FROM treatments WHERE category=?");
+                $stmt->execute([$category]);
+            }else{
+                $stmt = $this->conn->prepare("SELECT * FROM treatments");
+                $stmt->execute();
+            }
             if($stmt->rowCount() == 0){
                 return false;
             }

@@ -10,6 +10,11 @@ let defaultPage = "index.php";
 // prevent links from working if they have the "data-link" in their <>
 document.addEventListener("DOMContentLoaded", () => {
     document.body.addEventListener("click", e => {
+        // close overlay menu
+        if (e.target.matches(".overlay")) {
+            $(".overlay").fadeOut(500).empty();
+        }
+        // prevent href links
         if (e.target.matches("[data-link]")) {
             e.preventDefault();
             link = e.target.href;
@@ -19,6 +24,7 @@ document.addEventListener("DOMContentLoaded", () => {
             }
             changeWindow(link);
         }
+        // prevent submits and use js to submit
         if(e.target.matches("input[type=submit]")){
             e.preventDefault();
             postForm(e.target);
