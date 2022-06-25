@@ -30,15 +30,24 @@
             }else{
                 for($i=0; $i < count($appointments); $i++){
                     echo '<div class="appointment">';
-                    echo '<div class="appointment-date"><p>'.$appointments[$i]["date"]." - ".$appointments[$i]["time"].'</p></div>';
-                    echo '<div class="appointment-type"><p>'.
-                        $user->getTreatment($appointments[$i]["behandeling_id"])[$i]["name"]
-                    .'</p></div>';
+                    echo '<div class="appointment-date"><p>'.$appointments[$i]["date"]." • ".$appointments[$i]["time"].'</p></div>';
+                    echo '<div class="appointment-type"><p>'.$user->getTreatment($appointments[$i]["behandeling_id"])[0]["name"].'</p></div>';
+                    if($user->worker == 0){
+                        if($appointments[$i]["status"] == 0){
+                            echo '<div class="appointment-status" style="color:red;"><p>Uw afspraak is nog niet aangenomen.</p></div>';
+                        }else{
+                            echo '<div class="appointment-status" style="color:green;"><p>Uw afspraak is aangenomen.</p></div>';
+                        }
+                    }
                     // fix
                     if($user->worker == 1){
-                        echo '<div class="appointment-status"><p>'.$appointments[$i]["status"].'</p></div>';
-                        echo '<div class="appointment-name"><p>'.$appointments[$i]["user_id"].'</p></div>';
-                        echo '<div class="appointment-worker"><p>'.$appointments[$i]["med_id"].'</p></div>';
+                        if($appointments[$i]["status"] == 0){
+                            echo '<div class="appointment-status" style="color:red;"><p>De afspraak is nog niet aangenomen.</p></div>';
+                        }else{
+                            echo '<div class="appointment-status" style="color:green;"><p>De afspraak is aangenomen.</p></div>';
+                        }
+                        echo '<div class="appointment-name"><p>'.$user->getFirstnameById($appointments[$i]["user_id"]).'</p></div>';
+                        echo '<div class="appointment-worker"><p>'.$user->getFirstnameById($appointments[$i]["med_id"]).'</p></div>';
                     }
                     echo '</div>';
                 }

@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.0.4
+-- version 5.2.0
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 22, 2022 at 02:12 AM
--- Server version: 10.4.17-MariaDB
--- PHP Version: 8.0.2
+-- Gegenereerd op: 24 jun 2022 om 14:28
+-- Serverversie: 10.4.24-MariaDB
+-- PHP-versie: 8.1.6
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -24,7 +24,7 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Table structure for table `appointments`
+-- Tabelstructuur voor tabel `appointments`
 --
 
 CREATE TABLE `appointments` (
@@ -38,7 +38,7 @@ CREATE TABLE `appointments` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `appointments`
+-- Gegevens worden geëxporteerd voor tabel `appointments`
 --
 
 INSERT INTO `appointments` (`id`, `date`, `time`, `status`, `user_id`, `med_id`, `behandeling_id`) VALUES
@@ -49,7 +49,7 @@ INSERT INTO `appointments` (`id`, `date`, `time`, `status`, `user_id`, `med_id`,
 -- --------------------------------------------------------
 
 --
--- Table structure for table `treatments`
+-- Tabelstructuur voor tabel `treatments`
 --
 
 CREATE TABLE `treatments` (
@@ -61,7 +61,7 @@ CREATE TABLE `treatments` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `treatments`
+-- Gegevens worden geëxporteerd voor tabel `treatments`
 --
 
 INSERT INTO `treatments` (`id`, `type`, `category`, `name`, `price`) VALUES
@@ -100,7 +100,7 @@ INSERT INTO `treatments` (`id`, `type`, `category`, `name`, `price`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `users`
+-- Tabelstructuur voor tabel `users`
 --
 
 CREATE TABLE `users` (
@@ -119,15 +119,15 @@ CREATE TABLE `users` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `users`
+-- Gegevens worden geëxporteerd voor tabel `users`
 --
 
 INSERT INTO `users` (`id`, `first_name`, `last_name`, `street`, `postal_code`, `living_place`, `email`, `password`, `create_date`, `update_date`, `worker`, `login_token`) VALUES
 (1, 'firstname', 'lastname', '', '', '', 'email', 'password', '2022-06-03 21:27:40', '2022-06-03 23:27:40', 0, 'logintoken'),
 (2, 'firstname', 'lastname', '', '', '', 'email', 'password', '2022-06-03 21:40:11', '2022-06-03 23:40:11', 0, 'logintoken'),
 (3, 'firstname', 'lastname', '', '', '', 'email', 'password', '2022-06-03 21:47:37', '2022-06-03 23:47:37', 0, 'logintoken'),
-(8, 'asdniojufasbui', 'bnoujfsdbufds', '', '', '', 'jaco@jaco.jaco', '$2y$10$krIA6eHDbSELPNU4PAGjeudtqqv6vApncoTJssLJxtrbkVjog5E.O', '2022-06-04 01:06:22', '2022-06-21 11:06:46', 0, NULL),
-(9, 'bihasdfiy', 'vyuvyygvu', '', '', '', 'mborijnland@rijnland.nl', '$2y$10$NqTzBDMeMlRAVB5wMaMUpu6bKQVxZNoKfQ3NzsDDWqwavD.McC8y6', '2022-06-04 01:06:46', '2022-06-09 12:06:53', 0, '$2y$10$27IDQRHTtblCPOZGG66i7eegBx0ZLZlJdMPpvMOmcegHPfiQez9KO'),
+(8, 'asdniojufasbui', 'bnoujfsdbufds', '', '', '', 'jaco@jaco.jaco', '$2y$10$krIA6eHDbSELPNU4PAGjeudtqqv6vApncoTJssLJxtrbkVjog5E.O', '2022-06-04 01:06:22', '2022-06-24 11:06:02', 0, '$2y$10$UTu1QmSmbs5TYBFAiPLAeeXZbuPOUrd3euCqyx5NeEkXf7ynASPWi'),
+(9, 'bihasdfiy', 'vyuvyygvu', '', '', '', 'mborijnland@rijnland.nl', '$2y$10$NqTzBDMeMlRAVB5wMaMUpu6bKQVxZNoKfQ3NzsDDWqwavD.McC8y6', '2022-06-04 01:06:46', '2022-06-23 11:06:53', 0, NULL),
 (14, 'sdfbih', 'ibygh', '', '', '', 'bih@fdsdsfg.ff', '$2y$10$MXKDGAbviLOMKUyJDYtkt.VCPfzOX4gWJKbKaz/6r6KqgifAfr.ue', '2022-06-04 01:06:08', '2022-06-04 01:06:08', 0, NULL),
 (15, 'sfdgdf', 'bbhu', '', '', '', 'bisfd@hdfhd.hg', '$2y$10$w4UsmpuBItwDBs0zur4KROzNEgzkRR7w3Ovxh6KQE8S2plwPdZnSi', '2022-06-04 01:06:24', '2022-06-04 01:06:24', 0, NULL),
 (16, 'dgfgdf', 'uvygvtfyftyc', '', '', '', 'yutfv@bihbiysfd.fff', '$2y$10$Jhfnwn4/gY5hOgsA2AGLieJfSqIYAYHWGEAhGQJt/cE6RlJzVk.rm', '2022-06-04 01:06:00', '2022-06-04 01:06:00', 0, NULL),
@@ -145,45 +145,45 @@ INSERT INTO `users` (`id`, `first_name`, `last_name`, `street`, `postal_code`, `
 (28, 'dyctufsftd', 'GHFDGFH', 'gdfg', '2935XJ', 'fygtuftyui', 'guihy@fds.fds', '$2y$10$S1Rj9DcC0snGXz1FIrEKtOX8fbhT3PTqWrBJI.jDYySBO4vfaUW6G', '2022-06-10 11:06:54', '2022-06-10 02:06:32', 0, NULL);
 
 --
--- Indexes for dumped tables
+-- Indexen voor geëxporteerde tabellen
 --
 
 --
--- Indexes for table `appointments`
+-- Indexen voor tabel `appointments`
 --
 ALTER TABLE `appointments`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `treatments`
+-- Indexen voor tabel `treatments`
 --
 ALTER TABLE `treatments`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `users`
+-- Indexen voor tabel `users`
 --
 ALTER TABLE `users`
   ADD PRIMARY KEY (`id`);
 
 --
--- AUTO_INCREMENT for dumped tables
+-- AUTO_INCREMENT voor geëxporteerde tabellen
 --
 
 --
--- AUTO_INCREMENT for table `appointments`
+-- AUTO_INCREMENT voor een tabel `appointments`
 --
 ALTER TABLE `appointments`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
--- AUTO_INCREMENT for table `treatments`
+-- AUTO_INCREMENT voor een tabel `treatments`
 --
 ALTER TABLE `treatments`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=35;
 
 --
--- AUTO_INCREMENT for table `users`
+-- AUTO_INCREMENT voor een tabel `users`
 --
 ALTER TABLE `users`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;

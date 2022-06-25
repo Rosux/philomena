@@ -8,6 +8,9 @@
     --headerfontsize: 1em;
     --headerfontcolor: #000;
 }
+*{
+    user-select: none;
+}
 body, html{
     font-family: 'Rubik', sans-serif;
     padding: 0;
@@ -215,6 +218,9 @@ a{
     text-align: center;
     width: 100%;
 }
+.appointment-status{
+    font-size: 0.7em;
+}
 /* home page */
 .section-wrapper{
     width: 100%;
@@ -299,15 +305,7 @@ a{
 .new-appointment-row-current{
     box-shadow: 0px 0px 0px 2px rgb(0, 0, 0) inset;
 }
-.new-appointment-inner-wrapper-treatments{
-    margin-top: 25px;
-    width: 100%;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
-}
-.new-appointment-inner-wrapper-treatments > div{
+.new-appointment-wrapper > form > .overlay-form-wrapper > div{
     width: calc(50% - 10px);
 }
 .treatment-row-title{
@@ -318,7 +316,7 @@ a{
 .treatment-row-title{
     margin-top: 25px;
 }
-.treatment-row{
+.new-appointment-row2{
     width: 100%;
     display: flex;
     flex-direction: row;
@@ -326,6 +324,9 @@ a{
     justify-content: space-between;
     border-bottom: 1px solid black;
     cursor: pointer;
+}
+.new-appointment-row-name{
+    width: 100%;
 }
 .treatment-row:hover{
     background-color: rgb(230, 230, 230);
@@ -360,9 +361,45 @@ a{
     border: solid 1px black;
     cursor: pointer;
 }
-
-
-
+.new-appointment-wrapper > form > .overlay-form-wrapper{
+    margin-top: 25px;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+}
+.new-appointment-wrapper > form{
+    width: 100%;
+    height: fit-content;
+    padding: 0;
+    margin: 0;
+}
+.appointment-row-center{
+    width: 100% !important;
+    height: fit-content !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
+    margin-top: 25px !important;
+}
+.overlay-form-wrapper > input[type=date],
+.overlay-form-wrapper > input[type=submit],
+.overlay-form-wrapper > input[type=time]{
+    box-sizing: border-box;
+    padding: 1em 1em;
+    border: solid 2px black;
+    font-size: var(--formfontsize);
+    border-radius: 100px;
+    font-family: 'Rubik', sans-serif;
+}
+.overlay-form-wrapper > input{
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 25px;
+    margin-bottom: 25px;
+}
 
 
 

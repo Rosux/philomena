@@ -7,9 +7,21 @@
 //   philomena-import = class for referencing import parts like it only loads that element and its children
 let defaultPage = "index.php";
 
+// clamp method
+const clamp = (num, min, max) => Math.min(Math.max(num, min), max);
+
 // prevent links from working if they have the "data-link" in their <>
 document.addEventListener("DOMContentLoaded", () => {
     document.body.addEventListener("click", e => {
+        // setup overlay new appointment menu
+        if (e.target.matches(".new-appointment-row > p")) {
+            changeNewAppointmentWindow(e.target.id);
+        }
+        // change button in new appointment
+        if (e.target.matches(".new-appointment-row-name")) {
+            let check = $(e.target).parent().find("input");
+            check.prop('checked', !$(e.target).parent().find("input").prop("checked"))
+        }
         // close overlay menu
         if (e.target.matches(".overlay")) {
             $(".overlay").fadeOut(500).empty();
@@ -31,6 +43,26 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     });
 });
+
+let x = 1;
+function backward() {
+    x--;
+    x = clamp(x, 1, 5);
+    changeNewAppointmentWindow(x);
+}
+function forward() {
+    x++;
+    x = clamp(x, 1, 5);
+    changeNewAppointmentWindow(x);
+}
+
+function changeNewAppointmentWindow(e) {
+    $(".new-appointment-wrapper > form").children().fadeOut(500);
+    $(".new-appointment-wrapper > form > #appointment-" + e).fadeIn(500);
+    $(".new-appointment-row > p").removeClass("new-appointment-row-current");
+    $(".new-appointment-row > p[id="+e+"]").addClass("new-appointment-row-current");
+    x = e;
+}
 
 function postForm(button) {
     $(button).prop('disabled', true);
@@ -94,6 +126,9 @@ function setInputValue(button, value) {
 
 // load default page
 $(document).ready(function() {
+    $('.new-appointment-row2 > input[type=radio][name="treatment"]').change(function() {
+        console.log($(this).val()); // or, use `this.value`
+    });
     const regex = /philomena|\/|\.php|\.html/g;
     urlPage = window.location.href.replace(regex, "").replace(window.location.hostname, "").replace(window.location.protocol, "");
     if (urlPage == "" || urlPage == "index") {
@@ -166,20 +201,20 @@ function changeURL(x) {
 }
 
 // its just a goof
-console.error(
-    "———————————No console errors?———————————\n",
-    "⠀⣞⢽⢪⢣⢣⢣⢫⡺⡵⣝⡮⣗⢷⢽⢽⢽⣮⡷⡽⣜⣜⢮⢺⣜⢷⢽⢝⡽⣝\n",
-    "⠸⡸⠜⠕⠕⠁⢁⢇⢏⢽⢺⣪⡳⡝⣎⣏⢯⢞⡿⣟⣷⣳⢯⡷⣽⢽⢯⣳⣫⠇\n",
-    "⠀⠀⢀⢀⢄⢬⢪⡪⡎⣆⡈⠚⠜⠕⠇⠗⠝⢕⢯⢫⣞⣯⣿⣻⡽⣏⢗⣗⠏⠀\n",
-    "⠀⠪⡪⡪⣪⢪⢺⢸⢢⢓⢆⢤⢀⠀⠀⠀⠀⠈⢊⢞⡾⣿⡯⣏⢮⠷⠁⠀⠀  \n",
-    "⠀⠀⠀⠈⠊⠆⡃⠕⢕⢇⢇⢇⢇⢇⢏⢎⢎⢆⢄⠀⢑⣽⣿⢝⠲⠉⠀⠀⠀⠀\n",
-    "⠀⠀⠀⠀⠀⡿⠂⠠⠀⡇⢇⠕⢈⣀⠀⠁⠡⠣⡣⡫⣂⣿⠯⢪⠰⠂⠀⠀⠀⠀\n",
-    "⠀⠀⠀⠀⡦⡙⡂⢀⢤⢣⠣⡈⣾⡃⠠⠄⠀⡄⢱⣌⣶⢏⢊⠂⠀⠀⠀⠀⠀⠀\n",
-    "⠀⠀⠀⠀⢝⡲⣜⡮⡏⢎⢌⢂⠙⠢⠐⢀⢘⢵⣽⣿⡿⠁⠁⠀⠀⠀⠀⠀⠀⠀\n",
-    "⠀⠀⠀⠀⠨⣺⡺⡕⡕⡱⡑⡆⡕⡅⡕⡜⡼⢽⡻⠏⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀\n",
-    "⠀⠀⠀⠀⣼⣳⣫⣾⣵⣗⡵⡱⡡⢣⢑⢕⢜⢕⡝⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀\n",
-    "⠀⠀⠀⣴⣿⣾⣿⣿⣿⡿⡽⡑⢌⠪⡢⡣⣣⡟⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀\n",
-    "⠀⠀⠀⡟⡾⣿⢿⢿⢵⣽⣾⣼⣘⢸⢸⣞⡟⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀\n",
-    "⠀⠀⠀⠀⠁⠇⠡⠩⡫⢿⣝⡻⡮⣒⢽⠋⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀\n",
-    "————————————————————————————————————————"
-);
+// console.error(
+//     "———————————No console errors?———————————\n",
+//     "⠀⣞⢽⢪⢣⢣⢣⢫⡺⡵⣝⡮⣗⢷⢽⢽⢽⣮⡷⡽⣜⣜⢮⢺⣜⢷⢽⢝⡽⣝\n",
+//     "⠸⡸⠜⠕⠕⠁⢁⢇⢏⢽⢺⣪⡳⡝⣎⣏⢯⢞⡿⣟⣷⣳⢯⡷⣽⢽⢯⣳⣫⠇\n",
+//     "⠀⠀⢀⢀⢄⢬⢪⡪⡎⣆⡈⠚⠜⠕⠇⠗⠝⢕⢯⢫⣞⣯⣿⣻⡽⣏⢗⣗⠏⠀\n",
+//     "⠀⠪⡪⡪⣪⢪⢺⢸⢢⢓⢆⢤⢀⠀⠀⠀⠀⠈⢊⢞⡾⣿⡯⣏⢮⠷⠁⠀⠀  \n",
+//     "⠀⠀⠀⠈⠊⠆⡃⠕⢕⢇⢇⢇⢇⢇⢏⢎⢎⢆⢄⠀⢑⣽⣿⢝⠲⠉⠀⠀⠀⠀\n",
+//     "⠀⠀⠀⠀⠀⡿⠂⠠⠀⡇⢇⠕⢈⣀⠀⠁⠡⠣⡣⡫⣂⣿⠯⢪⠰⠂⠀⠀⠀⠀\n",
+//     "⠀⠀⠀⠀⡦⡙⡂⢀⢤⢣⠣⡈⣾⡃⠠⠄⠀⡄⢱⣌⣶⢏⢊⠂⠀⠀⠀⠀⠀⠀\n",
+//     "⠀⠀⠀⠀⢝⡲⣜⡮⡏⢎⢌⢂⠙⠢⠐⢀⢘⢵⣽⣿⡿⠁⠁⠀⠀⠀⠀⠀⠀⠀\n",
+//     "⠀⠀⠀⠀⠨⣺⡺⡕⡕⡱⡑⡆⡕⡅⡕⡜⡼⢽⡻⠏⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀\n",
+//     "⠀⠀⠀⠀⣼⣳⣫⣾⣵⣗⡵⡱⡡⢣⢑⢕⢜⢕⡝⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀\n",
+//     "⠀⠀⠀⣴⣿⣾⣿⣿⣿⡿⡽⡑⢌⠪⡢⡣⣣⡟⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀\n",
+//     "⠀⠀⠀⡟⡾⣿⢿⢿⢵⣽⣾⣼⣘⢸⢸⣞⡟⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀\n",
+//     "⠀⠀⠀⠀⠁⠇⠡⠩⡫⢿⣝⡻⡮⣒⢽⠋⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀\n",
+//     "————————————————————————————————————————"
+// );

@@ -100,6 +100,81 @@
         //     return false;
         // }
 
+        public function addAppointment($date, $time, $treatment){
+            if(!$this->getAvailableWorkerID($date, $time, $treatment)){
+                return false;
+            }
+            $stmt = $this->conn->prepare("INSERT INTO appointments (date, time, user_id, med_id, behandeling_id) VALUES (?, ?, ?, ?, ?)");
+            $stmt->execute([
+                $date,
+                $time,
+                $this->id,
+                $this->getAvailableWorkerID($date, $time, $treatment),
+                $treatment
+            ]);
+            if($stmt->rowCount() == 0){
+                $output['error'] = "Fout opgetreden. Kan geen afspraak maken.";
+                echo json_encode($output);
+                exit();
+            }
+            return true;
+        }
+
+        private function getAvailableWorkerID($date, $time, $treatment){
+            $stmt = $this->conn->prepare("SELECT * FROM users WHERE worker=1");
+            $stmt->execute();
+            if($stmt->rowCount() == 0){
+                return false;
+            }
+            $workerdata = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+            $stmt = $this->conn->prepare("SELECT * FROM appointments WHERE date=? AND time=?");
+            $stmt->execute([
+                $date,
+                $time
+            ]);
+            if($stmt->rowCount() == 0){
+                return $workerdata[0]["id"];
+            }
+            $appointmentsdata = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+            for($i=0; $i < count($workerdata); $i++){
+                if($appointmentsdata[$i]["med_id"] != $workerdata[$i]["id"]){
+                    return $workerdata[$i]["id"];
+                }
+            }
+            return false;
+            //SELECT * FROM `appointments` WHERE `date`="2022-06-08" AND time="16:40:42" AND med_id=28
+            //SELECT * FROM `appointments` WHERE (`date`="2022-06-08" AND time="16:40:42") AND (med_id=28 OR med_id=27) 
+        }
+
+        public function isAppointmentAvailable($date, $time){
+            $stmt = $this->conn->prepare("SELECT * FROM appointments WHERE date=? AND time=?");
+            $stmt->execute([
+                $date,
+                $time
+            ]);
+            if($stmt->rowCount() < 2){
+                return true;
+            }
+            return false;
+        }
+
+        public function getFirstnameById($id){
+            $stmt = $this->conn->prepare("SELECT * FROM users WHERE id=? LIMIT 1");
+            $stmt->execute([
+                $id
+            ]);
+            if($stmt->rowCount() == 0){
+                return false;
+            }
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        }
+
+        public function isWeekend($date){
+            return (date('N', strtotime($date)) >= 6);
+        }
+
         public function getAllAppointments(){
             if($this->worker != 1){
                 return false;
