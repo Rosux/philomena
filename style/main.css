@@ -8,9 +8,6 @@
     --headerfontsize: 1em;
     --headerfontcolor: #000;
 }
-*{
-    user-select: none;
-}
 body, html{
     font-family: 'Rubik', sans-serif;
     padding: 0;
@@ -29,6 +26,43 @@ a{
 }
 .content{
     margin-top: var(--headerheight);
+}
+/* index */
+.big-banner{
+    width: 50%;
+    min-height: 25vh;
+    height: 300px;
+    height: fit-content;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-image: url("../images/philomena-logo-diap.png");
+}
+.image-row{
+    width: 80%;
+    height: fit-content;
+    padding: 0 0 50px 0;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
+.image-row > div{
+    width: 50%;
+    min-height: 400px;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+.image-left{
+    background-image: url("../images/5.png");
+}
+.image-right{
+    background-image: url("../images/7.png");
+}
+.image-center{
+    background-image: url("../images/9.png");
+    width: 100%;
 }
 /* form presets */
 .form-wrapper{
@@ -221,6 +255,9 @@ a{
 .appointment-status{
     font-size: 0.7em;
 }
+.appointment-name, .appointment-worker{
+    font-size: 0.7em;
+}
 /* home page */
 .section-wrapper{
     width: 100%;
@@ -399,6 +436,56 @@ a{
     margin-right: auto;
     margin-top: 25px;
     margin-bottom: 25px;
+}
+/* more appiontment stuff */
+.appointment-accept-cancel{
+    width: 100%;
+}
+.appointment-accept-cancel > form > input[type=text]{
+    display: none;
+}
+.appointment-accept-cancel > form > input[type=submit]{
+    font-size: 0.7em;
+    width: fit-content;
+    border-radius: 100px;
+    outline: none;
+    border: solid 1px grey;
+    padding: 0px 15px;
+}
+/* profile */
+.profile > h1{
+    text-align: center;
+    color: white;
+    padding: 40px 0;
+}
+.profile > form{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 1.3em;
+}
+.profile > form > div{
+    min-width: 25%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+.profile > form > .input > input{
+    width: 10%;
+    min-width: fit-content;
+    margin-left: auto;
+    margin-right: auto;
+    height: 40px;
+    padding: none;
+    font-size: var(--formfontsize);
+    border-radius: 100px;
+    font-family: 'Rubik', sans-serif;
+    border: solid 1px grey;
+    padding: 0px 20px;
+    margin-bottom: 40px;
+    margin-top: 5px;
 }
 
 

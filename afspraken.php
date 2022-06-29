@@ -46,8 +46,14 @@
                         }else{
                             echo '<div class="appointment-status" style="color:green;"><p>De afspraak is aangenomen.</p></div>';
                         }
-                        echo '<div class="appointment-name"><p>'.$user->getFirstnameById($appointments[$i]["user_id"]).'</p></div>';
-                        echo '<div class="appointment-worker"><p>'.$user->getFirstnameById($appointments[$i]["med_id"]).'</p></div>';
+                        echo '<div class="appointment-name"><p>Klant: '.$user->getFirstnameById($appointments[$i]["user_id"])[0]["first_name"].'</p></div>';
+                        echo '<div class="appointment-worker"><p>Werknemer: '.$user->getFirstnameById($appointments[$i]["med_id"])[0]["first_name"].'</p></div>';
+                        if($appointments[$i]["status"] == 0){
+                            echo '<div class="appointment-accept-cancel"><form action="php/setAppointment.php" method="POST"><input type="text" name="appointmentid" value="'.$appointments[$i]["id"].'"><input type="submit" value="Afspraak Accepteren"></form></div>';
+                        }else{
+                            echo '<div class="appointment-accept-cancel"><form action="php/setAppointment.php" method="POST"><input type="text" name="appointmentid" value="'.$appointments[$i]["id"].'"><input type="submit" value="Afspraak Afzeggen"></form></div>';
+                        }
+                        echo '<div class="appointment-accept-cancel"><form action="php/deleteAppointment.php" method="POST"><input type="text" name="appointmentid" value="'.$appointments[$i]["id"].'"><input style="color: red;" type="submit" value="Verwijder Afspraak"></form></div>';
                     }
                     echo '</div>';
                 }

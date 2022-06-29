@@ -161,14 +161,15 @@
         }
 
         public function getFirstnameById($id){
-            $stmt = $this->conn->prepare("SELECT * FROM users WHERE id=? LIMIT 1");
+            $stmt = $this->conn->prepare("SELECT * FROM users WHERE id=?");
             $stmt->execute([
                 $id
             ]);
             if($stmt->rowCount() == 0){
                 return false;
             }
-            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+            $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            return $data;
         }
 
         public function isWeekend($date){
@@ -225,6 +226,81 @@
             }
             $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
             return $data;
+        }
+
+        public function deleteAppointment($appointmentId){
+            $stmt = $this->conn->prepare("DELETE FROM appointments WHERE id=?");
+            $stmt->execute([
+                $appointmentId
+            ]);
+            if($stmt->rowCount() != 0){
+                return true;
+            }else{
+                return false;
+            }
+        }
+
+        public function updateAppointmentStatus($appointmentId){
+            $stmt = $this->conn->prepare("SELECT * FROM appointments WHERE id=?");
+            $stmt->execute([
+                $appointmentId
+            ]);
+            if($stmt->rowCount() == 0){
+                return false;
+            }
+            $stmt = $this->conn->prepare("UPDATE appointments SET status=!status WHERE id=?");
+            $stmt->execute([
+                $appointmentId
+            ]);
+            if($stmt->rowCount() != 0){
+                return true;
+            }else{
+                return false;
+            }
+        }
+
+        public function updateUser($firstname, $lastname, $street, $postalcode, $livingplace){
+            $stmt = $this->conn->prepare("INSERT INTO users (first_name, last_name, update_date, street, postal_code, living_place) VALUES (?, ?, ?, ?, ?, ?)");
+            $stmt->execute([
+                htmlspecialchars($firstname),
+                htmlspecialchars($lastname),
+                date("Y/m/d/h/m/s"),
+                htmlspecialchars($street),
+                htmlspecialchars($postalcode),
+                htmlspecialchars($livingplace)
+            ]);
+            if($stmt->rowCount() != 0){
+                return true;
+            }else{
+                return false;
+            }
+        }
+
+        public function changePasswords($oldpassword, $newpassword){
+            $stmt = $this->conn->prepare("SELECT * FROM users WHERE id=? LIMIT 1");
+            $stmt->execute([
+                $this->id
+            ]);
+            if($stmt->rowCount() == 0){
+                $output['error'] = "Gebruiker niet gevonden.";
+                echo json_encode($output);
+                exit();
+            }
+            $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            if(!password_verify($oldpassword, $data[0]["password"])){
+                return false;
+            }
+            $stmt = $this->conn->prepare("UPDATE users SET password=?, update_date=? WHERE id=?");
+            $stmt->execute([
+                password_hash($newpassword, PASSWORD_DEFAULT),
+                date("Y/m/d/h/m/s"),
+                $this->id
+            ]);
+            if($stmt->rowCount() != 0){
+                return true;
+            }else{
+                return false;
+            }
         }
 
         public function login($email, $password, $remember=false){

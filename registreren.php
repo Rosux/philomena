@@ -1,3 +1,11 @@
+<?php
+    require_once "php/user.php";
+    $user = new User();
+    if($user->checkLoggedIn()){
+        header("Location: loguit.php");
+    }
+    // access data = $user->firstname
+?>
 <div class="form-wrapper philomena-import">
     <div class="form-image">
         <img src="images/philomena-logo-diap.png" alt="Philomena Logo"> 

@@ -25,7 +25,15 @@
     <div class="overlay"></div>
     <div class="content philomena-import">
         <div class="section-wrapper">
-            <div class="section-title">Home Page</div>
+            <div class="big-banner"></div>
+            <div class="image-row">
+                <div class="image-left"></div>
+                <div class="image-right"></div>
+            </div>
+            <div class="section-title">Producten</div>
+            <div class="image-row">
+                <div class="image-center"></div>
+            </div>
         </div>
     </div>
     <?php //require_once("footer.php") ?>
